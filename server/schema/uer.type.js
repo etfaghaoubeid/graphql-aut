@@ -1,8 +1,8 @@
-const { GraphQLInputObjectType, GraphQLID, GraphQLString } = require("graphql");
+const { GraphQLObjectType, GraphQLID, GraphQLString } = require("graphql");
 
 
 
-const UserType = new GraphQLInputObjectType({
+const UserType = new GraphQLObjectType({
     name: 'UserType',
     fields: () => ({
         id: { type: GraphQLID },
@@ -10,6 +10,9 @@ const UserType = new GraphQLInputObjectType({
             type: GraphQLString
         },
         email: {
+            type: GraphQLString
+        },
+        password: {
             type: GraphQLString
         }
     })

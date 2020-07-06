@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLID, GraphQLNonNull } = require("graphql");
+const { GraphQLObjectType, GraphQLID, GraphQLNonNull, GraphQLString } = require("graphql");
 const UserType = require("./uer.type");
 const User = require("../models/User");
 
@@ -9,11 +9,17 @@ const RootQuery = new GraphQLObjectType({
     fields: () => ({
         login: {
             type: UserType,
-            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-            async resolve(parentValue, { id }) {
+            args: {
+                email: { type: new GraphQLNonNull(GraphQLString) },
+                password: { type: new GraphQLNonNull(GraphQLString) }
+            },
+            async resolve(parentValue, { email, password }) {
                 try {
-                    const user = await User.findById(id);
-                    return user;
+                    const user = await User.findOne({ email });
+                    if (user.password === password) {
+                        return user
+                    }
+
 
                 } catch (err) {
                     console.log(err);

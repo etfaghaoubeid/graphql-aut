@@ -9,16 +9,17 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 name: { type: GraphQLString },
-                email: { type: GraphQLString }
-            },
-            async resolve(parentValue, { name, email }) {
+                email: { type: GraphQLString },
+                password: { type: GraphQLString },
 
-                const user = new User({ name, email })
+            },
+            async resolve(parentValue, { name, email, password }) {
+                const user = new User({ name, email, password })
                 try {
                     const doc = await user.save();
                     return doc;
 
-                } catch (error) {
+                } catch (err) {
                     console.log(err)
                 }
             }
