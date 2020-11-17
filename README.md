@@ -1,1 +1,1 @@
-# graphql-aut
+# graphql-authentication
